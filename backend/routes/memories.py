@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.memory import Memory, MemoryType
 from models.user import User, SubscriptionType
-from backend.app import db
+from database import db
 from sqlalchemy import or_, desc
 
 memories_bp = Blueprint('memories', __name__)

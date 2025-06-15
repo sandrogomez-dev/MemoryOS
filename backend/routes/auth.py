@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, set_access_cookies, unset_jwt_cookies
 from models.user import User
-from app import db
+from database import db
 import re
 
 auth_bp = Blueprint('auth', __name__)
@@ -14,11 +14,11 @@ def validate_password(password):
     # At least 8 characters, one uppercase, one lowercase, one number
     if len(password) < 8:
         return False
-    if not re.search("[a-z]", password):
+    if not re.search(r"[a-z]", password):
         return False
-    if not re.search("[A-Z]", password):
+    if not re.search(r"[A-Z]", password):
         return False
-    if not re.search("\d", password):
+    if not re.search(r"\d", password):
         return False
     return True
 

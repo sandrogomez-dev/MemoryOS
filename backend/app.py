@@ -1,11 +1,12 @@
 from flask import Flask, send_from_directory
-from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
-from flask_migrate import Migrate
 from datetime import timedelta
 import os
 from dotenv import load_dotenv
+
+# Import database configuration
+from database import db, init_db
 
 # Load environment variables
 load_dotenv()
@@ -30,9 +31,8 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize extensions
-db = SQLAlchemy(app)
+init_db(app)  # Initialize database with app
 jwt = JWTManager(app)
-migrate = Migrate(app, db)
 CORS(app, supports_credentials=True)
 
 # Import models
@@ -64,10 +64,14 @@ def serve_static(path):
     else:
         return send_from_directory(app.static_folder, 'index.html')
 
-# Create tables
-@app.before_first_request
-def create_tables():
+# Health check route
+@app.route('/api/health')
+def health_check():
+    return {'status': 'healthy', 'message': 'MemoryOS Backend is running!'}, 200
+
+# Create tables on startup
+with app.app_context():
     db.create_all()
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000) 
+    app.run(debug=True, host='0.0.0.0', port=5001) 

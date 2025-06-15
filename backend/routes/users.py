@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.user import User, SubscriptionType
 from models.memory import Memory
 from models.reminder import Reminder
-from app import db
+from database import db
 from datetime import datetime, timedelta
 
 users_bp = Blueprint('users', __name__)
