@@ -57,6 +57,9 @@ cd memoryos
 
 ### **2. Configurar Backend (Python/Flask)**
 ```bash
+# Entrar al directorio backend
+cd backend
+
 # Crear entorno virtual
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
@@ -77,6 +80,9 @@ flask db upgrade
 
 ### **3. Configurar Frontend (React/Vite)**
 ```bash
+# Entrar al directorio frontend
+cd frontend
+
 # Instalar dependencias de Node.js
 npm install
 
@@ -87,10 +93,10 @@ echo "VITE_API_URL=http://localhost:5000" > .env.local
 ### **4. Ejecutar en Desarrollo**
 ```bash
 # Terminal 1 - Backend (Puerto 5000)
-python app.py
+cd backend && python app.py
 
 # Terminal 2 - Frontend (Puerto 5173)
-npm run dev
+cd frontend && npm run dev
 ```
 
 La aplicación estará disponible en:
@@ -101,25 +107,26 @@ La aplicación estará disponible en:
 
 ```
 memoryos/
-├── src/
-│   ├── front/                    # Frontend React
+├── frontend/                    # Frontend React
+│   ├── src/
 │   │   ├── components/          # Componentes reutilizables
 │   │   ├── pages/               # Páginas principales
 │   │   ├── services/            # APIs y servicios
 │   │   ├── hooks/               # Custom hooks
 │   │   ├── store/               # Estado global
-│   │   ├── routes/              # Configuración de rutas
 │   │   └── styles/              # CSS y estilos
-│   └── api/                     # Backend Flask
-│       ├── models/              # Modelos SQLAlchemy
-│       ├── routes/              # Blueprints de Flask
-│       ├── services/            # Servicios de datos
-│       ├── middleware/          # Autenticación
-│       └── utils/               # Utilidades
+│   ├── index.html               # HTML principal
+│   ├── package.json             # Dependencias Node
+│   └── vite.config.js          # Configuración Vite
+├── backend/                     # Backend Flask
+│   ├── models/                  # Modelos SQLAlchemy
+│   ├── routes/                  # Blueprints de Flask
+│   ├── services/                # Servicios de datos
+│   ├── utils/                   # Utilidades
+│   ├── app.py                   # Aplicación Flask
+│   └── requirements.txt         # Dependencias Python
 ├── migrations/                  # Migraciones de BD
-├── requirements.txt             # Dependencias Python
-├── package.json                 # Dependencias Node
-├── vite.config.js              # Configuración Vite
+├── README.md                    # Documentación
 └── render.yaml                 # Configuración despliegue
 ```
 

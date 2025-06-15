@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from src.api.models.user import User, SubscriptionType
-from src.api.models.memory import Memory
-from src.api.models.reminder import Reminder
+from models.user import User, SubscriptionType
+from models.memory import Memory
+from models.reminder import Reminder
 from app import db
 from datetime import datetime, timedelta
 

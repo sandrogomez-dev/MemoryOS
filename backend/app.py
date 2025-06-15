@@ -36,15 +36,15 @@ migrate = Migrate(app, db)
 CORS(app, supports_credentials=True)
 
 # Import models
-from src.api.models.user import User
-from src.api.models.memory import Memory
-from src.api.models.reminder import Reminder
+from models.user import User
+from models.memory import Memory
+from models.reminder import Reminder
 
 # Import routes
-from src.api.routes.auth import auth_bp
-from src.api.routes.memories import memories_bp
-from src.api.routes.reminders import reminders_bp
-from src.api.routes.users import users_bp
+from routes.auth import auth_bp
+from routes.memories import memories_bp
+from routes.reminders import reminders_bp
+from routes.users import users_bp
 
 # Register blueprints
 app.register_blueprint(auth_bp, url_prefix='/api/auth')

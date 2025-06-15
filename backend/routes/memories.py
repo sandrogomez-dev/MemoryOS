@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from src.api.models.memory import Memory, MemoryType
-from src.api.models.user import User, SubscriptionType
-from app import db
+from models.memory import Memory, MemoryType
+from models.user import User, SubscriptionType
+from backend.app import db
 from sqlalchemy import or_, desc
 
 memories_bp = Blueprint('memories', __name__)
