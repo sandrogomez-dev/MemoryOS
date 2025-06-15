@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || ''
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001'
 
 class AuthService {
   async login(email, password) {
@@ -12,16 +12,34 @@ class AuthService {
         body: JSON.stringify({ email, password }),
       })
 
-      const data = await response.json()
-
+      // Check if response is ok before trying to parse JSON
       if (!response.ok) {
-        throw new Error(data.message || 'Login failed')
+        // Try to get error message from response
+        let errorMessage = 'Login failed'
+        try {
+          const errorData = await response.json()
+          errorMessage = errorData.message || errorMessage
+        } catch (jsonError) {
+          // If JSON parsing fails, use status text
+          errorMessage = `Server error: ${response.status} ${response.statusText}`
+        }
+        throw new Error(errorMessage)
       }
 
+      // Check if response has content before parsing JSON
+      const contentType = response.headers.get('content-type')
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Server returned invalid response format')
+      }
+
+      const data = await response.json()
       return data.user
     } catch (error) {
       if (error.name === 'TypeError' && error.message.includes('fetch')) {
-        throw new Error('Failed to connect to server. Please check if the backend is running.')
+        throw new Error('🚫 Cannot connect to server. Please check if the backend is running on http://localhost:5001')
+      }
+      if (error.message.includes('Unexpected end of JSON input')) {
+        throw new Error('🚫 Server returned empty response. Backend may not be running properly.')
       }
       throw error
     }
@@ -38,60 +56,111 @@ class AuthService {
         body: JSON.stringify({ email, password, name }),
       })
 
-      const data = await response.json()
-
       if (!response.ok) {
-        throw new Error(data.message || 'Registration failed')
+        let errorMessage = 'Registration failed'
+        try {
+          const errorData = await response.json()
+          errorMessage = errorData.message || errorMessage
+        } catch (jsonError) {
+          errorMessage = `Server error: ${response.status} ${response.statusText}`
+        }
+        throw new Error(errorMessage)
       }
 
+      const contentType = response.headers.get('content-type')
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Server returned invalid response format')
+      }
+
+      const data = await response.json()
       return data.user
     } catch (error) {
       if (error.name === 'TypeError' && error.message.includes('fetch')) {
-        throw new Error('Failed to connect to server. Please check if the backend is running.')
+        throw new Error('🚫 Cannot connect to server. Please check if the backend is running on http://localhost:5001')
+      }
+      if (error.message.includes('Unexpected end of JSON input')) {
+        throw new Error('🚫 Server returned empty response. Backend may not be running properly.')
       }
       throw error
     }
   }
 
   async logout() {
-    const response = await fetch(`${API_URL}/api/auth/logout`, {
-      method: 'POST',
-      credentials: 'include',
-    })
+    try {
+      const response = await fetch(`${API_URL}/api/auth/logout`, {
+        method: 'POST',
+        credentials: 'include',
+      })
 
-    if (!response.ok) {
-      throw new Error('Logout failed')
+      if (!response.ok) {
+        throw new Error('Logout failed')
+      }
+
+      return true
+    } catch (error) {
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        throw new Error('🚫 Cannot connect to server')
+      }
+      throw error
     }
-
-    return true
   }
 
   async getCurrentUser() {
-    const response = await fetch(`${API_URL}/api/auth/me`, {
-      method: 'GET',
-      credentials: 'include',
-    })
+    try {
+      const response = await fetch(`${API_URL}/api/auth/me`, {
+        method: 'GET',
+        credentials: 'include',
+      })
 
-    if (!response.ok) {
-      throw new Error('Not authenticated')
+      if (!response.ok) {
+        throw new Error('Not authenticated')
+      }
+
+      const contentType = response.headers.get('content-type')
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Server returned invalid response format')
+      }
+
+      const data = await response.json()
+      return data.user
+    } catch (error) {
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        throw new Error('🚫 Cannot connect to server')
+      }
+      if (error.message.includes('Unexpected end of JSON input')) {
+        throw new Error('🚫 Server returned empty response')
+      }
+      throw error
     }
-
-    const data = await response.json()
-    return data.user
   }
 
   async refreshToken() {
-    const response = await fetch(`${API_URL}/api/auth/refresh`, {
-      method: 'POST',
-      credentials: 'include',
-    })
+    try {
+      const response = await fetch(`${API_URL}/api/auth/refresh`, {
+        method: 'POST',
+        credentials: 'include',
+      })
 
-    if (!response.ok) {
-      throw new Error('Token refresh failed')
+      if (!response.ok) {
+        throw new Error('Token refresh failed')
+      }
+
+      const contentType = response.headers.get('content-type')
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Server returned invalid response format')
+      }
+
+      const data = await response.json()
+      return data.user
+    } catch (error) {
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        throw new Error('🚫 Cannot connect to server')
+      }
+      if (error.message.includes('Unexpected end of JSON input')) {
+        throw new Error('🚫 Server returned empty response')
+      }
+      throw error
     }
-
-    const data = await response.json()
-    return data.user
   }
 }
 
