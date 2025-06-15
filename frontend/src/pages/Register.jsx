@@ -92,12 +92,24 @@ const Register = () => {
       )
       dispatch({ type: actions.LOGIN_SUCCESS, payload: user })
       navigate('/dashboard', { replace: true })
-    } catch (error) {
-      dispatch({ 
-        type: actions.SET_ERROR, 
-        payload: error.message || 'Registration failed' 
-      })
-    } finally {
+          } catch (error) {
+        let errorMessage = 'Registration failed. Please try again.'
+        
+        if (error.message.includes('fetch')) {
+          errorMessage = '🔌 Connection error. Please check if the server is running and try again.'
+        } else if (error.message.includes('email')) {
+          errorMessage = '📧 This email is already registered. Try logging in instead.'
+        } else if (error.message.includes('password')) {
+          errorMessage = '🔒 Password requirements not met. Please check the requirements above.'
+        } else if (error.message) {
+          errorMessage = error.message
+        }
+        
+        dispatch({
+          type: actions.SET_ERROR,
+          payload: errorMessage
+        })
+      } finally {
       setIsLoading(false)
     }
   }

@@ -70,12 +70,24 @@ const Login = () => {
       // Redirect to intended page or dashboard
       const from = location.state?.from?.pathname || '/dashboard'
       navigate(from, { replace: true })
-    } catch (error) {
-      dispatch({ 
-        type: actions.SET_ERROR, 
-        payload: error.message || 'Login failed' 
-      })
-    } finally {
+          } catch (error) {
+        let errorMessage = 'Login failed. Please try again.'
+        
+        if (error.message.includes('fetch')) {
+          errorMessage = '🔌 Connection error. Please check if the server is running and try again.'
+        } else if (error.message.includes('Invalid credentials')) {
+          errorMessage = '🔐 Invalid email or password. Please check your credentials.'
+        } else if (error.message.includes('User not found')) {
+          errorMessage = '👤 Account not found. Please register first or check your email.'
+        } else if (error.message) {
+          errorMessage = error.message
+        }
+        
+        dispatch({
+          type: actions.SET_ERROR,
+          payload: errorMessage
+        })
+      } finally {
       setIsLoading(false)
     }
   }

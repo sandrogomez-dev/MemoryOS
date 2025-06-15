@@ -13,6 +13,10 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
+import AddMemory from './pages/AddMemory'
+import MemoryVault from './pages/MemoryVault'
+import Reminders from './pages/Reminders'
+import AddReminder from './pages/AddReminder'
 
 // Styles
 import './styles/index.css'
@@ -87,17 +91,12 @@ function App() {
               } 
             />
 
-            {/* Placeholder routes for future implementation */}
+            {/* Memory Routes */}
             <Route 
               path="/memories" 
               element={
                 <ProtectedRoute>
-                  <PlaceholderPage 
-                    title="Memory Vault" 
-                    icon="bi-collection"
-                    description="Your personal memory storage will be implemented here"
-                    comingSoon
-                  />
+                  <MemoryVault />
                 </ProtectedRoute>
               } 
             />
@@ -106,12 +105,7 @@ function App() {
               path="/memories/new" 
               element={
                 <ProtectedRoute>
-                  <PlaceholderPage 
-                    title="Add New Memory" 
-                    icon="bi-plus-circle"
-                    description="Create and store new memories"
-                    comingSoon
-                  />
+                  <AddMemory />
                 </ProtectedRoute>
               } 
             />
@@ -120,12 +114,7 @@ function App() {
               path="/reminders" 
               element={
                 <ProtectedRoute>
-                  <PlaceholderPage 
-                    title="Reminders" 
-                    icon="bi-alarm"
-                    description="Manage your smart reminders"
-                    comingSoon
-                  />
+                  <Reminders />
                 </ProtectedRoute>
               } 
             />
@@ -134,12 +123,7 @@ function App() {
               path="/reminders/new" 
               element={
                 <ProtectedRoute>
-                  <PlaceholderPage 
-                    title="Set New Reminder" 
-                    icon="bi-alarm"
-                    description="Create smart reminders with spaced repetition"
-                    comingSoon
-                  />
+                  <AddReminder />
                 </ProtectedRoute>
               } 
             />

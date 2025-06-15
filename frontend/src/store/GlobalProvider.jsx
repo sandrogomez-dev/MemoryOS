@@ -10,6 +10,7 @@ const initialStore = () => ({
   subscription: 'free',
   isLoading: false,
   error: null,
+  success: null,
   aiAssistant: { 
     isActive: false, 
     messages: [] 
@@ -26,6 +27,8 @@ export const ACTIONS = {
   SET_LOADING: 'SET_LOADING',
   SET_ERROR: 'SET_ERROR',
   CLEAR_ERROR: 'CLEAR_ERROR',
+  SET_SUCCESS: 'SET_SUCCESS',
+  CLEAR_SUCCESS: 'CLEAR_SUCCESS',
   
   // Auth actions
   LOGIN_SUCCESS: 'LOGIN_SUCCESS',
@@ -65,6 +68,12 @@ const storeReducer = (state, action) => {
     
     case ACTIONS.CLEAR_ERROR:
       return { ...state, error: null }
+    
+    case ACTIONS.SET_SUCCESS:
+      return { ...state, success: action.payload, error: null }
+    
+    case ACTIONS.CLEAR_SUCCESS:
+      return { ...state, success: null }
     
     // Auth actions
     case ACTIONS.LOGIN_SUCCESS:

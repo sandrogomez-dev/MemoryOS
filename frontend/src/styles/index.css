@@ -367,13 +367,15 @@ body {
 
 /* Memory Card Styles */
 .memory-card {
-  transition: var(--transition);
-  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  border-left: 4px solid transparent;
 }
 
 .memory-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+  border-left-color: var(--bs-primary);
 }
 
 .memory-type-badge {
@@ -464,4 +466,74 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
+}
+
+/* Enhanced Memory Card Styles */
+.memory-card {
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  border-left: 4px solid transparent;
+}
+
+.memory-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+  border-left-color: var(--bs-primary);
+}
+
+/* Text truncation utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Enhanced form styles */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+/* Search input with icon */
+.form-control-lg.ps-5 {
+  padding-left: 3rem !important;
+}
+
+/* Enhanced tag badges */
+.badge {
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+/* Memory importance colors */
+.bg-importance-1 { background-color: #6c757d !important; }
+.bg-importance-2 { background-color: #17a2b8 !important; }
+.bg-importance-3 { background-color: #007bff !important; }
+.bg-importance-4 { background-color: #ffc107 !important; }
+.bg-importance-5 { background-color: #dc3545 !important; }
+
+/* Filter indicator */
+.filter-indicator {
+  position: relative;
+}
+
+.filter-indicator::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--bs-primary);
+  border-radius: 50%;
+  display: block;
 } 
