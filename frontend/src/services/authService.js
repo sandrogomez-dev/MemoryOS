@@ -1,5 +1,8 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001'
 
+// Debug: Log the API URL being used
+console.log('API_URL:', API_URL)
+
 class AuthService {
   async login(email, password) {
     try {
