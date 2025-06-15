@@ -40,6 +40,7 @@ cors_origins = [
     "http://localhost:3001",  # Local development (alternative port)
     "http://localhost:3002",  # Local development (alternative port)
     "https://memory-os.vercel.app",  # Production Vercel URL
+    "https://memory-ozp8zbz1g-sandro-gomezs-projects.vercel.app",  # Preview deployment
     "https://*.vercel.app",   # All Vercel deployments
     "https://memoryos.vercel.app",  # Custom domain if you have one
     "https://memory-os.vercel.app"  # Alternative naming
