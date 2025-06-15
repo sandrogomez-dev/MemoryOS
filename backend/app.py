@@ -33,7 +33,19 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Initialize extensions
 init_db(app)  # Initialize database with app
 jwt = JWTManager(app)
-CORS(app, supports_credentials=True)
+
+# CORS configuration for production
+cors_origins = [
+    "http://localhost:3000",  # Local development
+    "https://memory-os-*.vercel.app",  # Vercel deployments
+    "https://memoryos.vercel.app"  # Custom domain if you have one
+]
+
+CORS(app, 
+     supports_credentials=True,
+     origins=cors_origins,
+     allow_headers=["Content-Type", "Authorization"],
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
 
 # Import models
 from models.user import User
