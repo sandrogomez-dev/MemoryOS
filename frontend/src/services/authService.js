@@ -36,10 +36,10 @@ class AuthService {
       return data.user
     } catch (error) {
       if (error.name === 'TypeError' && error.message.includes('fetch')) {
-        throw new Error('🚫 Cannot connect to server. Please check if the backend is running on http://localhost:5001')
+        throw new Error('🚫 Cannot connect to server. Please check your internet connection.')
       }
       if (error.message.includes('Unexpected end of JSON input')) {
-        throw new Error('🚫 Server returned empty response. Backend may not be running properly.')
+        throw new Error('🚫 Server returned empty response. Please try again.')
       }
       throw error
     }
@@ -76,10 +76,10 @@ class AuthService {
       return data.user
     } catch (error) {
       if (error.name === 'TypeError' && error.message.includes('fetch')) {
-        throw new Error('🚫 Cannot connect to server. Please check if the backend is running on http://localhost:5001')
+        throw new Error('🚫 Cannot connect to server. Please check your internet connection.')
       }
       if (error.message.includes('Unexpected end of JSON input')) {
-        throw new Error('🚫 Server returned empty response. Backend may not be running properly.')
+        throw new Error('🚫 Server returned empty response. Please try again.')
       }
       throw error
     }

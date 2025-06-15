@@ -37,15 +37,20 @@ jwt = JWTManager(app)
 # CORS configuration for production
 cors_origins = [
     "http://localhost:3000",  # Local development
-    "https://memory-os-*.vercel.app",  # Vercel deployments
-    "https://memoryos.vercel.app"  # Custom domain if you have one
+    "http://localhost:3001",  # Local development (alternative port)
+    "http://localhost:3002",  # Local development (alternative port)
+    "https://memory-os.vercel.app",  # Production Vercel URL
+    "https://*.vercel.app",   # All Vercel deployments
+    "https://memoryos.vercel.app",  # Custom domain if you have one
+    "https://memory-os.vercel.app"  # Alternative naming
 ]
 
 CORS(app, 
      supports_credentials=True,
      origins=cors_origins,
-     allow_headers=["Content-Type", "Authorization"],
-     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
+     allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+     expose_headers=["Set-Cookie"])
 
 # Import models
 from models.user import User
